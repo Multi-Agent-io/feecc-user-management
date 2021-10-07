@@ -60,9 +60,9 @@ def edit_employee(db: MongoDbWrapper) -> None:
         return
 
     new_employee = Employee(
-        name=typer.prompt("Full name (press Enter to leave as is)", default="") or old_employee.name,
-        position=typer.prompt("Position (press Enter to leave as is)", default="") or old_employee.position,
-        rfid_card_id=typer.prompt("RFID card ID (press Enter to leave as is)", default="") or old_employee.rfid_card_id,
+        name=typer.prompt("Full name (press Enter to leave as is)", default=old_employee.name),
+        position=typer.prompt("Position (press Enter to leave as is)", default=old_employee.position),
+        rfid_card_id=typer.prompt("RFID card ID (press Enter to leave as is)", default=old_employee.rfid_card_id),
     )
 
     diff = f"""
