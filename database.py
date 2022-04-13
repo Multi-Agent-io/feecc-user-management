@@ -18,8 +18,8 @@ class MongoDbWrapper:
 
     def __init__(self, mongo_client_url: str) -> None:
         self._client: MongoClient = MongoClient(mongo_client_url)
-        self._database = self._client["Feecc-Hub"]
-        self._employee_collection = self._database["Employee-data"]
+        self._database = self._client["feeccProd"]
+        self._employee_collection = self._database["emlpoyeeData"]
 
     def get_all_employees(self) -> tp.List[Employee]:
         return [Employee(**data) for data in list(self._employee_collection.find({}, {"_id": 0}))]
