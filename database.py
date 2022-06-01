@@ -1,3 +1,4 @@
+import hashlib
 import typing as tp
 from dataclasses import asdict, dataclass
 
@@ -6,11 +7,19 @@ from pymongo import MongoClient
 
 @dataclass
 class Employee:
-    """stores data about the worker"""
+    rfid_card_id: str
+    name: str
+    position: str
+    passport_code: str = ""
 
-    name: str = ""
-    position: str = ""
-    rfid_card_id: str = ""
+    def __post_init__(self) -> None:
+        if not self.passport_code:
+            self.passport_code = self.get_passport_code()
+
+    def get_passport_code(self) -> str:
+        employee_passport_string: str = " ".join([self.rfid_card_id, self.name, self.position])
+        employee_passport_string_encoded: bytes = employee_passport_string.encode()
+        return hashlib.sha256(employee_passport_string_encoded).hexdigest()
 
 
 class MongoDbWrapper:
